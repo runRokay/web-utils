@@ -1,0 +1,27 @@
+
+server:
+  port: 8382
+
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/test?characterEncoding=utf8&useSSL=false
+    username: root
+    password: 123456
+    type: com.zaxxer.hikari.HikariDataSource
+  http:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 100MB
+
+
+mybatis:
+#有时候粘贴项目时会造成classpath不在resources下面
+#启动会报错sqlSessionFactory create error ，地址上加上resources即可
+#正常情况就classpath:mapper/*.xml
+  mapperLocations: classpath:resources/mapper/*.xml
+  typeAliasesPackage: tk.mapper.model
+  configuration:
+    map-underscore-to-camel-case: true
+
