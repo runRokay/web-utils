@@ -1,6 +1,9 @@
 package com.demo.controller;
 
 import com.demo.bean.ResponseBean;
+import com.demo.bean.User;
+import com.demo.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +17,9 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/")
 public class MainController {
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("/")
     public String index(@SessionAttribute("user") String user, Model model) {
@@ -29,13 +35,13 @@ public class MainController {
 
     @RequestMapping(value = {"/loginPost"}, method = RequestMethod.POST)
     @ResponseBody
-    public String loginPost(String userName, String password, HttpSession session) {
-        ResponseBean bean = new ResponseBean(ResponseBean.FAULT, "用户名或密码错误");
-//        if (loginService.login(userName, password, session)) {
-//            bean = new ResponseBean(ConstantUtil.SUCCESS);
-//        } else {
-//            bean = new ResponseBean(ConstantUtil.FAULT, "用户名或密码错误");
-//        }
+    public String loginPost(User user, HttpSession session) {
+        ResponseBean bean;
+        if (userService.login(user, session)) {
+            bean = new ResponseBean(ResponseBean.SUCCESS);
+        } else {
+            bean = new ResponseBean(ResponseBean.FAULT, "用户名或密码错误");
+        }
         return bean.toString();
     }
 
