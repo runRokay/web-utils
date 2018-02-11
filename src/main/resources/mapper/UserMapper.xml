@@ -22,7 +22,7 @@
         #{id}, #{userName}, #{password})
     </insert>
 
-    <update id="updateUserByUserName" parameterType="com.demo.bean.Device">
+    <update id="updateUserByUserName" parameterType="com.demo.bean.User">
         UPDATE user
         SET password = #{password}
         WHERE user_name=#{userName}
